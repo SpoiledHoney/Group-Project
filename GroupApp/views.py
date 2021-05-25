@@ -111,3 +111,33 @@ def delete(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()
     return redirect(f'/user/dashboard')
+
+def add_comment(request):
+    # if 'logged_user' not in request.session:
+    #     return redirect('/')
+    if request.method == "POST":
+
+        post = Post.objects.get(id=request.POST['post_comment'])
+        #errors = Post.objects.review_validator(request.POST)
+
+        #if errors:
+            #for key,value in errors.items():
+                #messages.error(request, value)
+            #return redirect(f'/post/{post.id}')
+        
+        user = User.objects.get(id=request.session['logged_user'])
+        comment = Comment.objects.create(
+            content = request.POST['content'], 
+            post_comment = post,
+            user_comment = user
+            )
+
+        return redirect(f'/blog/{post.id}')
+
+def delete_comment(request, comment_id):
+    if 'logged_user' not in request.session:
+        messages.error(request, "Please register or log in first!")
+        return redirect('/')
+    comment = Comment.objects.get(id=comment_id)
+    comment.delete()
+    return redirect(f'/blog/{comment.post_comment.id}')

@@ -49,6 +49,6 @@ class Post(models.Model):
 class Comment(models.Model):
     post_comment = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user_comment = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    content = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     #approved_comment = models.BooleanField(default=True)
