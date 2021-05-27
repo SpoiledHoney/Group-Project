@@ -32,17 +32,46 @@
           </div>
         </div>
       </div>
+      <form class="d-flex" method='POST' action="blog/user/search">
+        {% csrf_token %}
+          <input class="form-control m-2" type="search" Name="searched" aria-label="Search">
+          <button class="btn btn-outline-tertiary" type="submit">Search</button>
+      </form>
     </nav>
   </header>
   <main role="main" class="container">
     <div class="content-section">
-      <div class="col-md-8">
         {% for post in allPosts %}
-        <a href="/blog/{{post.id}}">{{post.title}}</a> {{post.content}} {{post.user_post.first_name}}
+        <a href="/blog/{{post.id}}">{{post.title}}</a> 
+        <p>Posted By: <a href="/user/{{post.user_post.id}}">{{post.user_post.first_name}} {{post.user_post.last_name}}</a></p>
+        {{post.content}}
+        <br> 
         {% endfor %}
-      </div>
+      </table>
     </div>
   </main>
+  <br>
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
   <footer class="page-footer font-small blue pt-4">
     <div class="container-fluid text-center">
           <h5 class="text-uppercase">Links</h5>

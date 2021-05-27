@@ -41,23 +41,13 @@
   </header>
   <main role="main" class="container">
     <div class="content-section">
-        <h1>{{one_user.first_name}} {{one_user.last_name}}</h1>
-        <h3>User Email: {{one_user.email}}</h3>
-        <div class=" container">
-            <h3>User Posts</h3>
-            <ul>
-
-                {% for post in one_user.user_post.all %}
-                <li>
-                <a href="#">{{post.title}}</a> {% if post.user_post.id == request.session.logged_user %}<a href="/blog/{{post.id}}/delete">Delete Post</a> {%endif%}
-                {% endfor %}</li>
+        <h5>You searched for {{ searched }}</h5>
+            <ul class="list-group">
+              {% for post in allPosts %}
+              <a href="/blog/{{post.id}}">{{ post.title }}</a>
+              {% endfor %}
             </ul>
-          <!-- <h3>Liked Posts</h3>
-            <ul>
-              {% for post in one_user.liked.all %}
-              {%endfor%}
-          </ul>-->
-        </div>
+            
     </div>
   </main>
   <footer class="page-footer font-small blue pt-4">
@@ -82,3 +72,6 @@
     <div class="text-center py-3">© Information Here
       <a href="#!"> Yourwebsite.com</a>
     </div>
+  </footer>
+  
+  

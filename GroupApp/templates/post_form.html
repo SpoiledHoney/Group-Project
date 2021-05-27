@@ -27,11 +27,16 @@
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="/blog/blog_form">New Post</a>
-            <a class="nav-item nav-link" href="#">Profile</a>
+            <a class="nav-item nav-link" href="/user/{{logged_user.id}}">Profile</a>
             <a class="nav-item nav-link" href="/user/logout">Logout</a>
           </div>
         </div>
       </div>
+      <form class="d-flex" method='POST' action="blog/user/search">
+        {% csrf_token %}
+          <input class="form-control m-2" type="search" Name="searched" aria-label="Search">
+          <button class="btn btn-outline-tertiary" type="submit">Search</button>
+      </form>
     </nav>
   </header>
   <main role="main" class="container">
