@@ -87,9 +87,10 @@ def CreatePost(request):
     return redirect('/dashboard')
 
 def show_post(request, post_id):
+    
     context = {
         'logged_user': User.objects.get(id=request.session['logged_user']),
-        'post' : Post.objects.get(id=post_id)
+        'post' : Post.objects.get(id=post_id),
     }
     return render(request, 'user_post.html', context)
 
@@ -98,7 +99,6 @@ def user_page(request, user_id):
         messages.error(request, "Please register or log in first!")
         return redirect('/')
     user = User.objects.get(id=user_id)
-
     context = {
         'one_user': user
     }
@@ -141,3 +141,28 @@ def delete_comment(request, comment_id):
     comment = Comment.objects.get(id=comment_id)
     comment.delete()
     return redirect(f'/blog/{comment.post_comment.id}')
+
+def like(request, post_id):
+    user = User.objects.get(id=request.session["logged_user"])
+    post = Post.objects.get(id=post_id)
+    user.liked.add(post)
+
+    return redirect(f'/blog/{post.id}')
+
+def unlike(request, post_id):
+    user = User.objects.get(id=request.session["logged_user"])
+    post = Post.objects.get(id=post_id)
+    user.liked.remove(post)
+
+    return redirect(f'/blog/{post.id}')
+
+def search(request):
+    searched = request.POST['searched']
+    allPosts = Post.objects.filter(title=searched)
+    user = User.objects.get(id=request.session['logged_user'])
+    context = { 
+            "searched" : request.POST['searched'],
+            "allPosts" : Post.objects.filter(title=searched)
+            }
+    
+    return render(request, 'search.html', context)
